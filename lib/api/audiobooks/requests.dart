@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:librivox_dart_api/constants/constants.dart';
 import 'package:librivox_dart_api/models/models.dart';
 
-const String url = '${LibrivoxApi.url}/audiobooks';
+const String audioBookUrl = '${LibrivoxApi.url}/audiobooks';
 
 /// Fetches a list of audio books from the Librivox API.
 ///
@@ -18,12 +18,12 @@ const String url = '${LibrivoxApi.url}/audiobooks';
 /// Endpoint: `https://librivox.org/api/feed/audiobooks/`
 Future<List<AudioBook>> getAudioBooks({int limit = 50, int offset = 0}) async {
   // build the URL
-  final reqUrl = Uri.parse("$url/${LibrivoxApi.formatUrl}/&limit=$limit&offset=$offset");
+  final reqUrl = Uri.parse("$audioBookUrl/${LibrivoxApi.formatUrl}&limit=$limit&offset=$offset");
   final response = await http.get(reqUrl);
 
   // if response is not success
   if (response.statusCode > 299) {
-    throw HttpException(response.toString(), uri: Uri.parse(url));
+    throw HttpException(response.toString(), uri: Uri.parse(audioBookUrl));
   }
 
   // decode the response
