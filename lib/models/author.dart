@@ -13,10 +13,10 @@ class Author {
   // be returned from the API
 
   /// Date of birth of the author.
-  final String dob;
+  final String? dob;
 
   /// Date of death of the author.
-  final String dod;
+  final String? dod;
 
   Author({
     required this.id,

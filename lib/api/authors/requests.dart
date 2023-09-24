@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:librivox_dart_api/constants/constants.dart';
+import 'package:librivox_dart_api/librivox_dart_api.dart';
 
 const String authorsUrl = '${LibrivoxApi.url}/authors';
 
@@ -14,8 +14,8 @@ const String authorsUrl = '${LibrivoxApi.url}/authors';
 ///
 /// Throws an [HttpException] if the API request fails.
 ///
-/// Endpoint: `https://librivox.org/api/feed/audiobooks/`
-Future<void> getAuthors({int limit = 50, int offset = 0}) async {
+/// Endpoint: `https://librivox.org/api/feed/authors/`
+Future<List<Author>> getAuthors({int limit = 50, int offset = 0}) async {
   // build the URL
   final reqUrl = Uri.parse("$authorsUrl/${LibrivoxApi.formatUrl}&limit=$limit&offset=$offset");
   final response = await http.get(reqUrl);
@@ -27,8 +27,7 @@ Future<void> getAuthors({int limit = 50, int offset = 0}) async {
 
   // decode the response
   Map<String, dynamic> data = jsonDecode(response.body);
-  print(data);
-//   List<AudioBook> books = List<AudioBook>.from(data['books'].map((book) => AudioBook.fromJson(book)));
+  List<Author> authors = List<Author>.from(data['authors'].map((book) => Author.fromJson(book)));
 
-//   return books;
+  return authors;
 }
